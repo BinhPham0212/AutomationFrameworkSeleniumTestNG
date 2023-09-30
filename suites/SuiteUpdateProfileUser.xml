@@ -1,10 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="LoginTest" verbose="2" thread-count="3">
-    <test name="LoginTest" parallel="methods" >
+<suite name="Update Profile User Test" verbose="2">
+    <test name="ProfileTest" parallel="methods" >
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="BinhAT.testcases.LoginTest"/>
+            <class name="BinhAT.testcases.ProfileTest"/>
         </classes>
     </test>
 </suite>

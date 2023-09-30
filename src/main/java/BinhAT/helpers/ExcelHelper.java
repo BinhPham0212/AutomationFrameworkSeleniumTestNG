@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+
+import BinhAT.utils.LogUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,7 +27,7 @@ public class ExcelHelper {
     private String excelFilePath;
     private Map<String, Integer> columns = new HashMap<>();
 
-    public void setExcelFile(String ExcelPath, String SheetName) {
+    public String setExcelFile(String ExcelPath, String SheetName) {
         try {
             File f = new File(ExcelPath);
 
@@ -52,6 +54,7 @@ public class ExcelHelper {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return ExcelPath;
     }
     //Gọi data từ Excel file theo từng ô
     public String getCellData(int rownum,  int colnum) {
@@ -150,12 +153,15 @@ public class ExcelHelper {
         }
     }
 
-    public Object[][] getExcelData(String fileName, String sheetName) {
+    public Object[][] getExcelData(String excelPath, String sheetName) {
         Object[][] data = null;
         Workbook workbook = null;
+
+        LogUtils.info("Excel File: " + excelPath);
+        LogUtils.info("Sheet Name: " + sheetName);
         try {
             // load the file
-            FileInputStream fis = new FileInputStream(fileName);
+            FileInputStream fis = new FileInputStream(excelPath);
 
             // load the workbook
             workbook = new XSSFWorkbook(fis);
@@ -170,7 +176,7 @@ public class ExcelHelper {
             int noOfRows = sh.getPhysicalNumberOfRows();
             int noOfCols = row.getLastCellNum();
 
-            System.out.println("No Row: "+ (noOfRows - 1) + " - " + "No Col: " + noOfCols);
+            LogUtils.info("No Row: "+ (noOfRows - 1) + " - " + "No Col: " + noOfCols);
 
             Cell cell;
             data = new Object[noOfRows - 1][noOfCols];
@@ -227,14 +233,15 @@ public class ExcelHelper {
     }
 
     public Object[][] getDataHashTable(String excelPath, String sheetName, int startRow, int endRow) {
-        System.out.println("Excel Path: " + excelPath);
+        LogUtils.info("Excel File: " + excelPath);
+        LogUtils.info("Sheet Name: " + sheetName);
         Object[][] data = null;
 
         try {
             File f = new File(excelPath);
             if (!f.exists()) {
                 try {
-                    System.out.println("File Excel path not found.");
+                    LogUtils.info("File Excel path not found.");
                     throw new IOException("File Excel path not found.");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -265,6 +272,7 @@ public class ExcelHelper {
 
         } catch (IOException e) {
             e.printStackTrace();
+            LogUtils.error(e.getMessage());
         }
 
         return data;

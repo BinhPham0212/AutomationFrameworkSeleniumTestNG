@@ -82,6 +82,14 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Set text " + value + " on element " + by);
     }
 
+    @Step("Cleared on element {0}")
+    public static void clearInputElement(By by) {
+        waitForElementVisible(by);
+        getWebElement(by).clear();
+        LogUtils.info("Cleared content with element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Cleared on element " + by);
+    }
+
     @Step("Get text element {0}")
     public static String getTextELement(By by) {
         waitForElementVisible(by);
@@ -91,6 +99,7 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.INFO, "==> Text: " + getWebElement(by).getText());
         return getWebElement(by).getText();
     }
+
 
     @Step("Get attribute {1} value of element {0}")
     public static String getAttributeELement(By by, String attributeName) {
@@ -119,16 +128,29 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Right click on element" + by);
     }
 
-    @Step("Right click on element {0}")
+    @Step("Highlight get element {0}")
     public static WebElement highLightElement(By by) {
         waitForElementVisible(by);
-        // Tô màu border ngoài chính element chỉ định - màu đỏ (có thể đổi màu khác)
-        if (getDriver() instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].style.border='3px solid green'", getWebElement(by));
-            sleep(1);
+        // Add color border of Element
+        if (DriverManager.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.border='5px solid blue'", getWebElement(by));
+            sleep(3);
+            LogUtils.info("Highlight on element " + by);
         }
         return getWebElement(by);
     }
+
+
+//    @Step("Highlight get text element {0}")
+//    public static WebElement highLightGetTextElement(By by) {
+//        waitForElementVisible(by);
+//        // Tô màu border ngoài chính element chỉ định - màu đỏ (có thể đổi màu khác)
+//        if (getDriver() instanceof JavascriptExecutor) {
+//            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].setAttribute('style', 'border:5px solid red; background:yellow'", getWebElement(by));
+//            sleep(1);
+//        }
+//        return getWebElement(by);
+//    }
 
     @Step("Scroll to element {0}")
     public static void scrollToElementWithJS(By by) {
@@ -137,6 +159,17 @@ public class WebUI {
         waitForElementPresent(by);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].scrollIntoView(true);", getWebElement(by));
+        LogUtils.info("Scroll to element " + by);
+        //Dùng action class
+    }
+
+    @Step("Scroll to element {0}")
+    public static void scrollToElementWithJSBottom(By by) {
+        //JavascriptExecutor
+        //Find Element trong DOM wait for Element trong DOM
+        waitForElementPresent(by);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
         LogUtils.info("Scroll to element " + by);
         //Dùng action class
     }
@@ -265,6 +298,8 @@ public class WebUI {
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+
+
     public static void waitForElementClickable(By by, int second) {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(second));
 
@@ -324,6 +359,46 @@ public class WebUI {
             return true;
         } catch (TimeoutException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Step("Verify Equals: {0} ---AND--- {1}")
+    public static boolean verifyEquals(By value1, String value2, String message) {
+        String getValue1 = getTextELement(value1).trim();
+        boolean result = getValue1.equals(value2);
+        if (result == true) {
+            LogUtils.info("Verify Equals: " + value1 + " = " + value2);
+            if (ExtentTestManager.getTest() != null) {
+                ExtentTestManager.logMessage(Status.PASS,"Verify Equals: " + value1 + " = " + value2);
+            }
+            AllureManager.saveTextLog("Verify Equals: " + value1 + " = " + value2);
+        } else {
+            LogUtils.info("Verify Equals: " + getValue1 + " != " + value2);
+            if (ExtentTestManager.getTest() != null) {
+                ExtentTestManager.logMessage(Status.FAIL,"Verify Equals: " + getValue1 + " NOT EQUALS " + value2);
+            }
+            AllureManager.saveTextLog("Verify Equals: " + getValue1 + " != " + value2);
+            Assert.assertEquals(getValue1, value2, message);
+        }
+        return result;
+    }
+
+    public static boolean verifyElementPresent(By by, String message) {
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(EXPLICIT_WAIT_TIMEOUT), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+            LogUtils.info("Verify element present " + by);
+            return true;
+        } catch (Exception e) {
+            if (message.isEmpty() || message == null) {
+                LogUtils.error("The element does NOT present. " + e.getMessage());
+                Assert.fail("The element does NOT present. " + e.getMessage());
+            } else {
+                LogUtils.error(message);
+                Assert.fail(message);
+            }
+
             return false;
         }
     }
