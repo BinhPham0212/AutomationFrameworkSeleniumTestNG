@@ -383,6 +383,24 @@ public class WebUI {
         }
         return result;
     }
+    public static boolean verifyEquals(Object value1, Object value2, String message) {
+        boolean result = value1.equals(value2);
+        if (result == true) {
+            LogUtils.info("Verify Equals: " + value1 + " = " + value2);
+            if (ExtentTestManager.getTest() != null) {
+                ExtentTestManager.logMessage(Status.PASS,"Verify Equals: " + value1 + " = " + value2);
+            }
+            AllureManager.saveTextLog("Verify Equals: " + value1 + " = " + value2);
+        } else {
+            LogUtils.info("Verify Equals: " + value1 + " != " + value2);
+            if (ExtentTestManager.getTest() != null) {
+                ExtentTestManager.logMessage(Status.FAIL,"Verify Equals: " + value1 + " NOT EQUALS " + value2);
+            }
+            AllureManager.saveTextLog("Verify Equals: " + value1 + " != " + value2);
+            Assert.assertEquals(value1, value2, message);
+        }
+        return result;
+    }
 
     public static boolean verifyElementPresent(By by, String message) {
         try {

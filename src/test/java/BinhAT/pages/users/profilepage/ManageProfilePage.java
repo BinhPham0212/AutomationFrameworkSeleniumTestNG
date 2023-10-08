@@ -55,7 +55,6 @@ public class ManageProfilePage {
         setText(inputPhoneAddress, "0123456789");
         clickElement(buttonSaveNewAddress);
         sleep(1);
-
     }
 
     public void verifyNewAddressAdded() {

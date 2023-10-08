@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import static BinhAT.keywords.WebUI.*;
 
+
 public class ProfileTest extends BaseTest {
     LoginPage loginPage = new LoginPage();
     ManageProfilePage manageProfilePage = new ManageProfilePage();
@@ -22,19 +23,6 @@ public class ProfileTest extends BaseTest {
         excel.setExcelFile(PropertiesHelper.getValue("EXCEL_CMS_LOGIN"), "Login");
         loginPage.loginSuccessWithCustomerAccount(excel.getCellData("EMAIL", 2), excel.getCellData("PASSWORD", 2));
         manageProfilePage.addNewAddress();
-        manageProfilePage.verifyNewAddressAdded();
-    }
-
-    @Test
-    public void TC_verifyContentAddNewAddress() {
-        excel.setExcelFile(PropertiesHelper.getValue("EXCEL_CMS_LOGIN"), "Login");
-        loginPage.loginSuccessWithCustomerAccount(excel.getCellData("EMAIL", 2), excel.getCellData("PASSWORD", 2));
-        clickElement(manageProfilePage.menuManageProfile);
-
-//        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-//        js.executeScript("arguments[0].style.border='5px solid blue'", DriverManager.getDriver().findElement(By.xpath("//div[@class='aiz-user-panel']/preceding-sibling::div[contains(@class,'aiz-user-sidenav')]//a[contains(normalize-space(),'Manage Profile')]")));
-//        sleep(3);
-
         manageProfilePage.verifyNewAddressAdded();
     }
 

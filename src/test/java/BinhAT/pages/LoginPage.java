@@ -135,7 +135,7 @@ public class LoginPage {
         verifyElementPresent(messageRequiredPassword,"No warning password input");
     }
 
-    public void loginSuccessWithCustomerAccount(String email, String password) {
+    public DashboardPage loginSuccessWithCustomerAccount(String email, String password) {
         openLoginPage();
         sleep(2);
         clearInputElement(inputEmail);
@@ -147,6 +147,8 @@ public class LoginPage {
         sleep(1);
         waitForElementVisible(new DashboardPage().titleDashboard);
         verifyElementVisible(new DashboardPage().titleDashboard, "Dashboard page is NOT displayed.");
+
+        return new DashboardPage();
     }
 
 }

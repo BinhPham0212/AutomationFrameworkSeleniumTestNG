@@ -4,7 +4,7 @@
     <test name="ProfileTest" parallel="methods" >
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="BinhAT.testcases.ProfileTest"/>
+            <class name="BinhAT.testcases.ProductInfoPageTest"/>
         </classes>
     </test>
 </suite>
