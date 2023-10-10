@@ -6,6 +6,7 @@ import BinhAT.pages.users.DashboardPage;
 import BinhAT.pages.users.products.ProductInfoPage;
 import BinhAT.utils.LogUtils;
 import org.openqa.selenium.By;
+import org.testng.annotations.Optional;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,17 +39,21 @@ public class OrderPage {
     private By buttonSubmitOrder = By.xpath("//button[normalize-space()='Complete Order']");
     private By messageOrderSuccess = By.xpath("//h1[normalize-space()='Thank You for Your Order!']");
     private By labelOrderCodeSuccess = By.xpath("//*[contains(text(), 'Order Code:')]/span");
+    private By subTotal = By.xpath("//th[normalize-space()='Subtotal']//following-sibling::td//span");
+    private By buttonPlusQuantity = By.xpath("//button[@data-type='plus']");
     /* Action class
      */
-
-    public ArrayList addToCart(String nameProduct) {
+    public static int sumPrice = 0;
+    public void addToCart(String nameProduct, @Optional("1") int quantityProduct) {
         waitForPageLoaded();
         setText(dashboardPage.inputSearchProduct, PropertiesHelper.getValue(nameProduct));
-        sleep(3);
+        sleep(5);
         clickElement(By.xpath("//div[@id='search-content']//div[contains(text(),'" + PropertiesHelper.getValue(nameProduct) + "')]"));
+        for (int i = 1; i <= quantityProduct; i++) {
+            clickElement(buttonPlusQuantity);
+        }
         waitForPageLoaded();
-
-        /* Verify Total Price
+        /* Verify Total Price = Price Product * quantity
          */
         String getpriceProduct = getTextELement(productInfoPage.productPriceDiscount).trim();
         String quantities = getAttributeELement(productInfoPage.quantityProduct, "value").trim();
@@ -57,14 +62,17 @@ public class OrderPage {
         verifyEquals(sumPriceProduct,TotalPrice,"The total price is INCORRECTLY");
 
         List<Integer> priceList = new ArrayList<Integer>();
+        priceList.clear();
         priceList.add(TotalPrice);
+        for(int price : priceList){
+            sumPrice += price;
+            LogUtils.info("Total price of product added to cart " + sumPrice);
+        }
 
         scrollToElementWithJSBottom(buttonAddToCart);
         clickElement(buttonAddToCart);
         sleep(2);
         verifyElementVisible(popupAddToCartSuccessed,"Product has not been added to cart");
-
-        return (ArrayList) priceList;
     }
 
     public void checkoutOrder() {
@@ -76,17 +84,20 @@ public class OrderPage {
         clickElement(buttonToDeliveryInfo);
         clickElement(buttonToPayment);
         clickElement(checkboxAgreeTermAndConditions);
+        sleep(3);
 
-        ArrayList priceList = new ArrayList();
-        int sumPrice = 0;
-        for (int i = 0; i < priceList.size(); i++) {
-            sumPrice = (int) priceList.get(i) + (int) priceList.get(i);
-        }
+        int subTotalBill = Integer.parseInt(getTextELement(subTotal).replace("$", "").replace(",", "").split("\\.")[0]);
+        LogUtils.info("Sub Total Bill: "+ subTotalBill);
+        LogUtils.info("Sum Price: " +sumPrice);
+        verifyEquals(sumPrice,subTotalBill, "SubTotal is not equal Sum Price");
 
-        System.out.println(sumPrice);
         clickElement(buttonSubmitOrder);
         verifyElementVisible(messageOrderSuccess, "Order is FAILED");
         LogUtils.info(getTextELement(labelOrderCodeSuccess));
+
+    }
+
+    public void verifyCodePurchase() {
 
     }
 

@@ -6,6 +6,7 @@ import BinhAT.helpers.PropertiesHelper;
 import BinhAT.pages.LoginPage;
 import BinhAT.pages.users.orders.OrderPage;
 import org.testng.annotations.Test;
+
 import static BinhAT.keywords.WebUI.*;
 
 public class OrderTest extends BaseTest {
@@ -16,18 +17,26 @@ public class OrderTest extends BaseTest {
     public void TC_AddToCart() {
         ExcelHelper excelLogin = new ExcelHelper();
         excelLogin.setExcelFile(PropertiesHelper.getValue("EXCEL_CMS_LOGIN"), "Login");
-        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("EMAIL",2), excelLogin.getCellData("PASSWORD", 2));
+        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("EMAIL", 2), excelLogin.getCellData("PASSWORD", 2));
 
-        orderPage.addToCart("Product_02");
+        orderPage.addToCart("Product_02",2);
         clickElement(orderPage.buttonBackToShopping);
-        orderPage.addToCart("Product_03");
-        clickElement(orderPage.buttonProceedToCheckout);
-        orderPage.checkoutOrder();
+        orderPage.addToCart("Product_03",1);
 
     }
 
+    @Test
     public void TC_CheckOutOrder() {
+        ExcelHelper excelLogin = new ExcelHelper();
+        excelLogin.setExcelFile(PropertiesHelper.getValue("EXCEL_CMS_LOGIN"), "Login");
+        loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("EMAIL", 2), excelLogin.getCellData("PASSWORD", 2));
+
+        orderPage.addToCart("Product_02",2);
+        clickElement(orderPage.buttonBackToShopping);
+        orderPage.addToCart("Product_03",1);
+        clickElement(orderPage.buttonProceedToCheckout);
         orderPage.checkoutOrder();
+
     }
 
 }
