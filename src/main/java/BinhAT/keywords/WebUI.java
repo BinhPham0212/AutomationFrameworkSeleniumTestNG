@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.openqa.selenium.By;
+import BinhAT.utils.DateUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -32,14 +33,18 @@ public class WebUI {
     private static int WAIT_PAGE_LOADED_TIMEOUT = 30;
 
     public static WebElement getWebElement(By by) {
-        return getDriver().findElement(by);
+        return DriverManager.getDriver().findElement(by);
     }
+    public static List<WebElement> getWebElements(By by) {
+        return DriverManager.getDriver().findElements(by);
+    }
+
 
     public static void logConsole(String message) {
         System.out.println(message);
     }
 
-    @Step("pen URL: {0}")
+    @Step("Open URL: {0}")
     public static void openURL(String URL) {
         getDriver().get(URL);
         waitForPageLoaded();
@@ -66,10 +71,33 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Clicked on element " + by);
     }
 
+    @Step("Click on the element by Javascript {0}")
+    public static void clickElementWithJs(By by) {
+        waitForElementPresent(by);
+        //Scroll to element với Javascript Executor
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+        //Click with JS
+        js.executeScript("arguments[0].click();", getWebElement(by));
+
+        LogUtils.info("Click on element with JS: " + by);
+        if (ExtentTestManager.getTest() != null) {
+            ExtentTestManager.logMessage(Status.PASS,"Click on element with JS: " + by);
+        }
+        AllureManager.saveTextLog("Click on element with JS: " + by);
+    }
+
     @Step("Set text {1} on element {0}")
     public static void setText(By by, String value) {
         waitForElementVisible(by);
         getWebElement(by).sendKeys(value);
+        LogUtils.info("Set text " + value + " on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Set text " + value + " on element " + by);
+    }
+    @Step("Set text {1} on element {0}")
+    public static void setText(By by, int value) {
+        waitForElementVisible(by);
+        getWebElement(by).sendKeys("value");
         LogUtils.info("Set text " + value + " on element " + by);
         ExtentTestManager.logMessage(Status.PASS, "Set text " + value + " on element " + by);
     }
@@ -184,7 +212,7 @@ public class WebUI {
         Actions action = new Actions(DriverManager.getDriver());
         //Click để mở form upload
         action.moveToElement(getWebElement(by)).click().perform();
-        sleep(3);
+        sleep(1);
 
         // Khởi tạo Robot class
         Robot robot = null;
@@ -212,6 +240,7 @@ public class WebUI {
         // Nhấn Enter
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
+        robot.delay(3000);
 
         LogUtils.info("Upload File with Local Form: " + filePath);
         if (ExtentTestManager.getTest() != null) {
@@ -383,7 +412,7 @@ public class WebUI {
         }
         return result;
     }
-    public static boolean verifyEquals(Object value1, Object value2, String message) {
+    public static boolean verifyEquals(Object value1, Object value2,String message) {
         boolean result = value1.equals(value2);
         if (result == true) {
             LogUtils.info("Verify Equals: " + value1 + " = " + value2);
@@ -421,6 +450,24 @@ public class WebUI {
         }
     }
 
+    public static boolean verifyElementPresent(By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(EXPLICIT_WAIT_TIMEOUT), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+            LogUtils.info("Verify element present " + by);
+            if (ExtentTestManager.getTest() != null) {
+                ExtentTestManager.logMessage(Status.INFO,"Verify element present " + by);
+            }
+            AllureManager.saveTextLog("Verify element present " + by);
+            AllureManager.saveScreenshotPNG();
+            return true;
+        } catch (Exception e) {
+            LogUtils.info("The element does NOT present. " + e.getMessage());
+            Assert.fail("The element does NOT present. " + e.getMessage());
+            return false;
+        }
+    }
+
     public static boolean verifyElementNotPresent(By by, int second) {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(second), Duration.ofMillis(500));
@@ -453,6 +500,28 @@ public class WebUI {
             System.out.println("Element " + xpath + " NOT exist in DOM.");
             return false;
         }
+    }
+
+    @Step("Switch to Window: {0}")
+    public static void switchToWindow(String title) {
+        waitForPageLoaded();
+        //Get original window
+        String originalWindow = DriverManager.getDriver().getWindowHandle();
+
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(EXPLICIT_WAIT_TIMEOUT), Duration.ofMillis(500));
+        //Wait for the new window or tab
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        //Loop through until we find a new window handle
+        for (String windowHandle : DriverManager.getDriver().getWindowHandles()) {
+            if (!originalWindow.contentEquals(windowHandle)) {
+                DriverManager.getDriver().switchTo().window(windowHandle);
+                if (DriverManager.getDriver().getTitle().equals(title)) {
+                    break;
+                }
+            }
+        }
+
     }
 
     /**

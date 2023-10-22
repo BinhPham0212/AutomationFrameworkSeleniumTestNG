@@ -1,6 +1,7 @@
 package BinhAT.helpers;
 
 import BinhAT.drivers.DriverManager;
+import BinhAT.utils.LogUtils;
 import org.monte.media.Format;
 import org.monte.media.Registry;
 import org.monte.media.math.Rational;
@@ -9,6 +10,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.io.FileHandler;
 
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -72,10 +74,8 @@ public class CaptureHelper extends ScreenRecorder {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
-
-
-
 
     /*Take screenshot
     */
@@ -95,8 +95,8 @@ public class CaptureHelper extends ScreenRecorder {
             }
             // Chổ này đặt tên thì truyền biến "screenName" gán cho tên File chụp màn hình
             FileHandler.copy(source, new File(SystemsHelper.getCurrentDir() + PropertiesHelper.getValue("SCREENSHOT_PATH") + File.separator + screenshotName + "_" + dateFormat.format(new Date()) + ".png"));
-            System.out.println("Screenshot taken: " + screenshotName);
-            System.out.println("Screenshot taken current URL: " + DriverManager.getDriver().getCurrentUrl());
+            LogUtils.info("Screenshot taken: " + screenshotName);
+            LogUtils.info("Screenshot taken current URL: " + DriverManager.getDriver().getCurrentUrl());
         } catch (Exception e) {
             System.out.println("Exception while taking screenshot: " + e.getMessage());
         }

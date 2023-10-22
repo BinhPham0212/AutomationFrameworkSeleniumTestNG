@@ -11,6 +11,11 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import javax.swing.event.ChangeListener;
+
+import static BinhAT.helpers.CaptureHelper.screenRecorder;
+import static BinhAT.helpers.CaptureHelper.startRecord;
+
 public class TestListener implements ITestListener {
 
     public String getTestName(ITestResult result) {
@@ -39,7 +44,7 @@ public class TestListener implements ITestListener {
     public void onTestStart(ITestResult result) {
         LogUtils.info("Running test case " + result.getName());
         //Record video
-        CaptureHelper.startRecord(result.getName());
+        startRecord(result.getName());
 
         //Bắt đầu ghi 1 TCs mới vào Extent Report
         ExtentTestManager.saveToReport(getTestName(result), getTestDescription(result));
@@ -48,18 +53,19 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
         LogUtils.info("Test case " + result.getName() + " is passed.");
-        //Stop record video
-//        CaptureHelper.stopRecord();
+        //Stop record video and Capture Screenshot
+        CaptureHelper.stopRecord();
         CaptureHelper.captureScreenshot(result.getName());
         //Extent Report
         ExtentTestManager.logMessage(Status.PASS, result.getName() + " is passed.");
+
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         LogUtils.error("Test case " + result.getName() + " is failed.");
         //Screenshot khi fail
-        CaptureHelper.captureScreenshot(result.getName());
+        CaptureHelper.captureScreenshot("FAIL_" + result.getName());
         LogUtils.error(result.getThrowable().toString());
 
         //Stop record video
@@ -76,7 +82,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        LogUtils.error("Test case " + result.getName() + " is skipped.");
+        LogUtils.error("Test case " + getTestDescription(result) + " is skipped.");
         LogUtils.error(result.getThrowable().toString());
         //Stop record video
         CaptureHelper.stopRecord();
@@ -86,7 +92,15 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        LogUtils.error("Đây là test case bị Fail nhưng có phần Success: " + result.getName());
+        //Screenshot khi fail a part
+        CaptureHelper.captureScreenshot(result.getName());
+        LogUtils.info(result.getThrowable().toString());
+
+        //Stop record video
+        CaptureHelper.stopRecord();
+        //Extent Report
+        ExtentTestManager.addScreenShot(result.getName());
+        LogUtils.error("This Testcase is FAILED but that have a Success part: " + getTestDescription(result));
         LogUtils.error(result.getThrowable().toString());
     }
 }

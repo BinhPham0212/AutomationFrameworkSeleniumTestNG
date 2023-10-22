@@ -2,6 +2,10 @@ package BinhAT.drivers;
 
 import org.openqa.selenium.WebDriver;
 
+import java.sql.Driver;
+
+import static BinhAT.keywords.WebUI.sleep;
+
 public class DriverManager {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -22,4 +26,6 @@ public class DriverManager {
         DriverManager.driver.get().quit();
         driver.remove();
     }
+
+
 }

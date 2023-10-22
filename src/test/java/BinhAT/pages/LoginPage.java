@@ -25,6 +25,7 @@ public class LoginPage {
     //    private By messageLoginSuccess = By.xpath("//span[normalize-space()='Cache cleared successfully']");
     private By messageRequiredEmail = By.xpath("//strong[contains(text(),'The email field is required when phone is not present.')]");
     private By messageRequiredPassword = By.xpath("//input[contains(@class, 'is-invalid') and @id = 'password']");
+    private By logoAdminPage = By.xpath("//img[@alt='Active eCommerce CMS']");
 
     //Viết hàm xử lý cho trang Login
     public void clickSkipPopupSubscribe() {
@@ -149,6 +150,20 @@ public class LoginPage {
         verifyElementVisible(new DashboardPage().titleDashboard, "Dashboard page is NOT displayed.");
 
         return new DashboardPage();
+    }
+    public void loginSuccessWithAdminAccount(String email, String password) {
+        openLoginPage();
+        sleep(2);
+        clearInputElement(inputEmail);
+        setText(inputEmail, email);
+        clearInputElement(inputPassword);
+        setText(inputPassword, password);
+        clickElement(buttonLogin);
+        waitForPageLoaded();
+        sleep(1);
+        waitForElementVisible(logoAdminPage);
+        verifyElementVisible(logoAdminPage, "Admin page is NOT displayed.");
+
     }
 
 }

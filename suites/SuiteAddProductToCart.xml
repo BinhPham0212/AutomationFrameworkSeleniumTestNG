@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Add product to cart" verbose="2">
+    <test name="Add product" parallel="methods" >
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="BinhAT.testcases.OrderTest">
+                <methods>
+                    <include name="TC_AddNewProduct" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

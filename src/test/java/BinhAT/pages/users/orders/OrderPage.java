@@ -1,17 +1,16 @@
 package BinhAT.pages.users.orders;
 
-import BinhAT.helpers.ExcelHelper;
+import BinhAT.drivers.DriverManager;
 import BinhAT.helpers.PropertiesHelper;
 import BinhAT.pages.users.DashboardPage;
 import BinhAT.pages.users.products.ProductInfoPage;
+import BinhAT.pages.users.profilepage.ManageProfilePage;
 import BinhAT.utils.LogUtils;
 import org.openqa.selenium.By;
-import org.testng.annotations.Optional;
+import org.openqa.selenium.WebElement;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static BinhAT.keywords.WebUI.*;
 
@@ -19,9 +18,10 @@ public class OrderPage {
     // Initial Object class
     DashboardPage dashboardPage = new DashboardPage();
     ProductInfoPage productInfoPage = new ProductInfoPage();
+    ManageProfilePage manageProfilePage = new ManageProfilePage();
 
     /* Object Element
-    */
+     */
     public By buttonAddToCart = By.xpath("//button[@onclick='addToCart()']");
     private By messageItemAdded = By.xpath("//h3[normalize-space()='Item added to your cart!']");
     private By buttonClosePopup = By.xpath("//div[@id='addToCart']//button[contains(@class,'close')]");
@@ -41,15 +41,20 @@ public class OrderPage {
     private By labelOrderCodeSuccess = By.xpath("//*[contains(text(), 'Order Code:')]/span");
     private By subTotal = By.xpath("//th[normalize-space()='Subtotal']//following-sibling::td//span");
     private By buttonPlusQuantity = By.xpath("//button[@data-type='plus']");
+    private By lablelCodePurchase = By.xpath("(//td[@class='footable-first-visible'])[1]");
+    private By lablelOrderCodeID = By.xpath("//*[contains(text(), 'Order Code')]//following-sibling::td");
+    private By listCartItem = By.xpath("//div[@id='cart_items']//li[contains(@class,'list-group-item')]");
+    private By iconRemoveFromCart = By.xpath("//button[contains(@onclick,'removeFromCart')]");
     /* Action class
      */
-    public static int sumPrice = 0;
-    public void addToCart(String nameProduct, @Optional("1") int quantityProduct) {
+
+    public static int sumPrice = 0;   //Total price product add to card
+    public void addToCart(String nameProduct, int quantityProduct) {
         waitForPageLoaded();
         setText(dashboardPage.inputSearchProduct, PropertiesHelper.getValue(nameProduct));
         sleep(5);
         clickElement(By.xpath("//div[@id='search-content']//div[contains(text(),'" + PropertiesHelper.getValue(nameProduct) + "')]"));
-        for (int i = 1; i <= quantityProduct; i++) {
+        for (int i = 1; i < quantityProduct; i++) {
             clickElement(buttonPlusQuantity);
         }
         waitForPageLoaded();
@@ -59,22 +64,38 @@ public class OrderPage {
         String quantities = getAttributeELement(productInfoPage.quantityProduct, "value").trim();
         int sumPriceProduct = (Integer.parseInt(getpriceProduct.replace("$", "").replace(",", "").split("\\.")[0])) * Integer.parseInt(quantities);
         int TotalPrice = Integer.parseInt(getTextELement(labelTotalPrice).replace("$", "").replace(",", "").split("\\.")[0]);
-        verifyEquals(sumPriceProduct,TotalPrice,"The total price is INCORRECTLY");
+        verifyEquals(sumPriceProduct, TotalPrice, "Total Price is NOT equal to Sum Price");
 
         List<Integer> priceList = new ArrayList<Integer>();
         priceList.clear();
         priceList.add(TotalPrice);
-        for(int price : priceList){
+        for (int price : priceList) {
             sumPrice += price;
             LogUtils.info("Total price of product added to cart " + sumPrice);
         }
+        /*
+         */
 
         scrollToElementWithJSBottom(buttonAddToCart);
         clickElement(buttonAddToCart);
         sleep(2);
-        verifyElementVisible(popupAddToCartSuccessed,"Product has not been added to cart");
+        verifyElementVisible(popupAddToCartSuccessed, "Product has not been added to cart");
     }
 
+    public void clearCartItems() {
+        if (checkElementExist(listCartItem) == true) {
+            List<WebElement> removeCartItem = getWebElements(listCartItem);
+            for (int i = 0; i < removeCartItem.size(); i++) {
+                clickElement(dashboardPage.headerCardItem);
+                clickElement(iconRemoveFromCart);
+                sleep(2);
+                if (removeCartItem.size() == 0) {
+                    break;
+                }
+            }
+        }
+    }
+    public static String OrderCodeSucess;
     public void checkoutOrder() {
         waitForPageLoaded();
         clickElement(buttonToShiping);
@@ -87,19 +108,24 @@ public class OrderPage {
         sleep(3);
 
         int subTotalBill = Integer.parseInt(getTextELement(subTotal).replace("$", "").replace(",", "").split("\\.")[0]);
-        LogUtils.info("Sub Total Bill: "+ subTotalBill);
-        LogUtils.info("Sum Price: " +sumPrice);
-        verifyEquals(sumPrice,subTotalBill, "SubTotal is not equal Sum Price");
+        LogUtils.info("Sub Total Bill: " + subTotalBill);
+        LogUtils.info("Sum Price: " + sumPrice);
+        verifyEquals(sumPrice, subTotalBill, "Sub Total Bill is NOT EQUAL to total price of product added to cart");
 
         clickElement(buttonSubmitOrder);
         verifyElementVisible(messageOrderSuccess, "Order is FAILED");
+        OrderCodeSucess = getTextELement(labelOrderCodeSuccess);
         LogUtils.info(getTextELement(labelOrderCodeSuccess));
-
     }
 
     public void verifyCodePurchase() {
-
+        clickElement(dashboardPage.buttonMyPanel);
+        waitForPageLoaded();
+        clickElement(manageProfilePage.menuPurchaseHistory);
+        waitForPageLoaded();
+        waitForElementPresent(lablelCodePurchase);
+        clickElement(lablelCodePurchase);
+        waitForPageLoaded();
+        verifyEquals(lablelOrderCodeID,OrderCodeSucess, "Code Purchase is NOT equal to Order Code ID in Purchase History page");
     }
-
-
 }

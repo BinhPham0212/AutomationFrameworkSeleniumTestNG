@@ -18,11 +18,9 @@ public class OrderTest extends BaseTest {
         ExcelHelper excelLogin = new ExcelHelper();
         excelLogin.setExcelFile(PropertiesHelper.getValue("EXCEL_CMS_LOGIN"), "Login");
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("EMAIL", 2), excelLogin.getCellData("PASSWORD", 2));
-
-        orderPage.addToCart("Product_02",2);
+        orderPage.addToCart("Product_02",3);
         clickElement(orderPage.buttonBackToShopping);
         orderPage.addToCart("Product_03",1);
-
     }
 
     @Test
@@ -30,13 +28,13 @@ public class OrderTest extends BaseTest {
         ExcelHelper excelLogin = new ExcelHelper();
         excelLogin.setExcelFile(PropertiesHelper.getValue("EXCEL_CMS_LOGIN"), "Login");
         loginPage.loginSuccessWithCustomerAccount(excelLogin.getCellData("EMAIL", 2), excelLogin.getCellData("PASSWORD", 2));
-
+        orderPage.clearCartItems();
         orderPage.addToCart("Product_02",2);
         clickElement(orderPage.buttonBackToShopping);
-        orderPage.addToCart("Product_03",1);
+        orderPage.addToCart("Product_03",2);
         clickElement(orderPage.buttonProceedToCheckout);
         orderPage.checkoutOrder();
-
+        orderPage.verifyCodePurchase();
     }
 
 }

@@ -93,6 +93,10 @@ public class ExcelHelper {
         return getCellData(rownum, columns.get(columnName));
     }
 
+    public String getCellData(String columnName){
+        return getCellData(String.valueOf(columns.get(columnName)));
+    }
+
     //set by column index
     public void setCellData(String text, int rowNumber, int colNumber) {
         try {

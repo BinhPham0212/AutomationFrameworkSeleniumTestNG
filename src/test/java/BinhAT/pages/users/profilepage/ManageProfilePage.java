@@ -8,6 +8,7 @@ import static BinhAT.keywords.WebUI.*;
 public class ManageProfilePage {
     private By titleManageProfilePage = By.xpath("//h1[normalize-space()='Manage Profile']");
     public By menuManageProfile = By.xpath("//div[@class='aiz-user-panel']/preceding-sibling::div[contains(@class,'aiz-user-sidenav')]//a[contains(normalize-space(),'Manage Profile')]");
+    public By menuPurchaseHistory = By.xpath("//div[@class='aiz-user-panel']/preceding-sibling::div[contains(@class,'aiz-user-sidenav')]//a[contains(normalize-space(),'Purchase History')]");
     private By titleAddress = By.xpath("//h5[normalize-space()='Address']");
     private By buttonAddressNewAddress = By.xpath("//div[contains(@onclick,'add_new_address')]");
     private By titlePopupNewAddress = By.xpath("//div[@id='new-address-modal']//h5[@class='modal-title']");
@@ -23,9 +24,6 @@ public class ManageProfilePage {
     private By inputPhoneAddress = By.xpath("//input[@placeholder='+880']");
     private By buttonSaveNewAddress = By.xpath("//button[normalize-space()='Save']");
     private By divFirstAddNewAddress = By.xpath("//div[contains(@onclick,'add_new_address')]//preceding-sibling::div[1]");
-//    private By buttonEditNewAddress = By.xpath("//div[contains(@onclick,'add_new_address')]//preceding-sibling::div[1]//button//following-sibling::div/a[normalize-space()='Edit']");
-//    private By iconThreeDots = By.xpath("//div[contains(@onclick,'add_new_address')]//preceding-sibling::div[1]//button");
-
     private By contentAddressAddedNew = By.xpath("//div[@onclick='add_new_address()']//preceding-sibling::div[1]/div//span[normalize-space()='Address:']/following-sibling::span");
     private By contentPostalcodeAddedNew = By.xpath("//div[@onclick='add_new_address()']//preceding-sibling::div[1]/div//span[normalize-space()='Postal code:']/following-sibling::span");
     private By contentCityAddedNew = By.xpath("//div[@onclick='add_new_address()']//preceding-sibling::div[1]/div//span[normalize-space()='City:']/following-sibling::span");

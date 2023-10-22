@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Check out order" verbose="2">
+    <test name="Check out order" parallel="methods" >
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="BinhAT.testcases.OrderTest">
+                <methods>
+                    <include name="TC_CheckOutOrder" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

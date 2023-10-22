@@ -1,10 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Update Profile User Test" verbose="2">
-    <test name="ProfileTest" parallel="methods" >
+    <test name="Update Profile" parallel="methods" >
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="BinhAT.testcases.ProductInfoPageTest"/>
+            <class name="BinhAT.testcases.ProductInfoTest"/>
         </classes>
     </test>
 </suite>

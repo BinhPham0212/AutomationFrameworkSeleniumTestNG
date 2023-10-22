@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
-public class ProductInfoPageTest extends BaseTest {
+public class ProductInfoTest extends BaseTest {
     LoginPage loginPage = new LoginPage();
     ProductInfoPage productInfoPage = new ProductInfoPage();
 

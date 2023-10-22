@@ -25,7 +25,7 @@ public class ProductInfoPage {
     public ArrayList productInfo(String nameProduct) {
         waitForPageLoaded();
         setText(dashboardPage.inputSearchProduct,nameProduct);
-        sleep(4);       //wait for Load Product
+        sleep(5);       //wait for Load Product
         clickElement(selectProductName);
         waitForPageLoaded();
         sleep(1);
