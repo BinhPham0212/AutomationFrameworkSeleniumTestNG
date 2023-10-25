@@ -1,7 +1,7 @@
 # **Final Project Selenium Java TestNG 06/2022**
 # Website Test: https://cms.anhtester.com/
 
-1. SYSTEM REQUIREMENTS
+**1. SYSTEM REQUIREMENTS**
 - Install JDK (recommend JDK >=11)
 
 - Install Chrome Browser, Edge Browser, Firefox Browser
@@ -10,7 +10,7 @@
 
 - Update with the latest Selenium version
 
-2. SOME FEATURES IN PROJECT
+**2. SOME FEATURES IN PROJECT**
 - Run the parallel test case
 
 - Read Config from Properties file
@@ -27,7 +27,7 @@
 -  Read data test from Json file
 -  Main Keyword: WebUI (call common function)
 
-3. TESTCASES IN PROJECT
+**3. TESTCASES IN PROJECT**
 - Login with Customer Account: check invaid email, invaid password and login success
 
 - Login User Page > Manage Profile (update)
