@@ -22,7 +22,6 @@ public class LoginPage {
     private By inputPassword = By.xpath("//input[@id='password']");
     private By buttonLogin = By.xpath("//button[normalize-space()='Login']");
     private By messageLoginInvalid = By.xpath("//span[normalize-space()='Invalid login credentials']");
-    //    private By messageLoginSuccess = By.xpath("//span[normalize-space()='Cache cleared successfully']");
     private By messageRequiredEmail = By.xpath("//span[@role='alert']");
     private By messageRequiredPassword = By.xpath("//input[contains(@class, 'is-invalid') and @id = 'password']");
     private By logoAdminPage = By.xpath("//img[@alt='Active eCommerce CMS']");
