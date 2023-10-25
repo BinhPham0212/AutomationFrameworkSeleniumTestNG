@@ -66,6 +66,7 @@ public class WebUI {
     @Step("Clicked on element {0}")
     public static void clickElement(By by) {
         waitForElementVisible(by);
+        highLightElement(by);
         getWebElement(by).click();
         LogUtils.info("Clicked on element " + by);
         ExtentTestManager.logMessage(Status.PASS, "Clicked on element " + by);
@@ -90,6 +91,7 @@ public class WebUI {
     @Step("Set text {1} on element {0}")
     public static void setText(By by, String value) {
         waitForElementVisible(by);
+        highLightElement(by);
         getWebElement(by).sendKeys(value);
         LogUtils.info("Set text " + value + " on element " + by);
         ExtentTestManager.logMessage(Status.PASS, "Set text " + value + " on element " + by);
@@ -161,24 +163,12 @@ public class WebUI {
         waitForElementVisible(by);
         // Add color border of Element
         if (DriverManager.getDriver() instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].style.border='5px solid blue'", getWebElement(by));
-            sleep(3);
+            ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].setAttribute('style', 'border: 2px solid red;');", waitForElementVisible(by));
+            sleep(1);
             LogUtils.info("Highlight on element " + by);
         }
         return getWebElement(by);
     }
-
-
-//    @Step("Highlight get text element {0}")
-//    public static WebElement highLightGetTextElement(By by) {
-//        waitForElementVisible(by);
-//        // Tô màu border ngoài chính element chỉ định - màu đỏ (có thể đổi màu khác)
-//        if (getDriver() instanceof JavascriptExecutor) {
-//            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].setAttribute('style', 'border:5px solid red; background:yellow'", getWebElement(by));
-//            sleep(1);
-//        }
-//        return getWebElement(by);
-//    }
 
     @Step("Scroll to element {0}")
     public static void scrollToElementWithJS(By by) {
@@ -278,6 +268,7 @@ public class WebUI {
 
     //Check Element tồn tại trong DOM và hiển thị trên UI
     public static WebElement waitForElementVisible(By by, int second) {
+        waitForElementPresent(by);
         try {
             WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(second), Duration.ofMillis(500));
 

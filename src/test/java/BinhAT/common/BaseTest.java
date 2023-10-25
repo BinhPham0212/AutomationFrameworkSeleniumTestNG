@@ -58,7 +58,6 @@ public class BaseTest {
     private static WebDriver initEdgeDriver() {
         System.out.println("Launching Edge browser...");
         WebDriverManager.edgedriver().setup();
-        System.setProperty("webdriver.gecko.driver","C:\\microsoftedge\\msedgedriver.exe");
         WebDriver driver;
         driver = new EdgeDriver();
         driver.manage().window().maximize();
@@ -69,7 +68,6 @@ public class BaseTest {
     private static WebDriver initFirefoxDriver() {
         System.out.println("Launching Firefox browser...");
         WebDriverManager.firefoxdriver().setup();
-        System.setProperty("webdriver.gecko.driver","C:\\firefoxdriver\\geckodriver.exe");
         WebDriver driver;
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
