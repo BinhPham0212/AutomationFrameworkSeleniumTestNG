@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Add New Product" verbose="2">
+    <test name="Add New Product" parallel="methods" >
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="BinhAT.testcases.AddProductTest">
+            </class>
+        </classes>
+    </test>
+</suite>

@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="LoginTest" verbose="2">
-    <test name="LoginTest">
+    <test name="LoginTest" parallel="methods" thread-count="2">
         <classes>
             <class name="BinhAT.testcases.LoginTest"/>
         </classes>
