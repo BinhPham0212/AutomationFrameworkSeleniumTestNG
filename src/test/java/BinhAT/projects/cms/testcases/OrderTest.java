@@ -1,10 +1,10 @@
-package BinhAT.testcases;
+package BinhAT.projects.cms.testcases;
 
 import BinhAT.common.BaseTest;
 import BinhAT.helpers.ExcelHelper;
 import BinhAT.helpers.PropertiesHelper;
-import BinhAT.pages.LoginPage;
-import BinhAT.pages.users.orders.OrderPage;
+import BinhAT.projects.cms.pages.LoginPage;
+import BinhAT.projects.cms.pages.users.orders.OrderPage;
 import org.testng.annotations.Test;
 
 import static BinhAT.keywords.WebUI.*;

@@ -1,11 +1,10 @@
-package BinhAT.pages.users.products;
+package BinhAT.projects.cms.pages.users.products;
 
-import BinhAT.pages.users.DashboardPage;
+import BinhAT.projects.cms.pages.users.DashboardPage;
 import org.openqa.selenium.By;
 import static BinhAT.keywords.WebUI.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProductInfoPage {

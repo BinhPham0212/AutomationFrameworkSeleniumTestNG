@@ -4,7 +4,7 @@
     <test name="Get product info" parallel="methods" >
         <parameter name="browser" value="edge"/>
         <classes>
-            <class name="BinhAT.testcases.AddProductTest"/>
+            <class name="BinhAT.projects.cms.testcases.AddProductTest"/>
         </classes>
     </test>
 </suite>

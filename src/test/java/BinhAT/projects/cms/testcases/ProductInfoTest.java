@@ -1,10 +1,10 @@
-package BinhAT.testcases;
+package BinhAT.projects.cms.testcases;
 
 import BinhAT.common.BaseTest;
 import BinhAT.helpers.ExcelHelper;
 import BinhAT.helpers.PropertiesHelper;
-import BinhAT.pages.LoginPage;
-import BinhAT.pages.users.products.ProductInfoPage;
+import BinhAT.projects.cms.pages.users.products.ProductInfoPage;
+import BinhAT.projects.cms.pages.LoginPage;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;

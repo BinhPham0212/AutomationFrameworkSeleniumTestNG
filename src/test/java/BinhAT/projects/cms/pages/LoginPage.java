@@ -1,9 +1,9 @@
-package BinhAT.pages;
+package BinhAT.projects.cms.pages;
 
 import static BinhAT.keywords.WebUI.*;
 
 import BinhAT.helpers.PropertiesHelper;
-import BinhAT.pages.users.DashboardPage;
+import BinhAT.projects.cms.pages.users.DashboardPage;
 import BinhAT.reports.ExtentTestManager;
 import BinhAT.utils.LogUtils;
 import com.aventstack.extentreports.Status;

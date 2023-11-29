@@ -1,8 +1,8 @@
-package BinhAT.pages.admin;
+package BinhAT.projects.cms.pages.admin;
 
 import BinhAT.helpers.SystemsHelper;
-import BinhAT.pages.LoginPage;
-import BinhAT.pages.users.products.ProductInfoPage;
+import BinhAT.projects.cms.pages.users.products.ProductInfoPage;
+import BinhAT.projects.cms.pages.LoginPage;
 import org.openqa.selenium.By;
 
 import static BinhAT.keywords.WebUI.*;

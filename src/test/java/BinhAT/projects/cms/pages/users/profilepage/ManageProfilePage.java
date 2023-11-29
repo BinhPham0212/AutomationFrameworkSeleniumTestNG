@@ -1,6 +1,5 @@
-package BinhAT.pages.users.profilepage;
+package BinhAT.projects.cms.pages.users.profilepage;
 
-import BinhAT.testcases.LoginTest;
 import org.openqa.selenium.By;
 
 import static BinhAT.keywords.WebUI.*;

@@ -3,7 +3,7 @@
 <suite name="LoginTest" verbose="2">
     <test name="LoginTest" parallel="methods" thread-count="2">
         <classes>
-            <class name="BinhAT.testcases.LoginTest"/>
+            <class name="BinhAT.projects.cms.testcases.LoginTest"/>
         </classes>
     </test>
 </suite>

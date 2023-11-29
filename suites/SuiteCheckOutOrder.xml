@@ -4,9 +4,9 @@
     <test name="Check out order" parallel="methods" >
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="BinhAT.testcases.OrderTest">
+            <class name="BinhAT.projects.cms.testcases.OrderTest">
                 <methods>
-                    <include name="TC_CheckOutOrder" />
+                    <include name="TC_CheckOutOrder"/>
                 </methods>
             </class>
         </classes>

@@ -1,19 +1,12 @@
-package BinhAT.testcases;
+package BinhAT.projects.cms.testcases;
 
 import BinhAT.common.BaseTest;
-import BinhAT.dataproviders.DataLogin;
-import BinhAT.drivers.DriverManager;
-import BinhAT.helpers.CaptureHelper;
 import BinhAT.helpers.ExcelHelper;
 import BinhAT.helpers.PropertiesHelper;
 import BinhAT.listeners.TestListener;
-import BinhAT.pages.LoginPage;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import BinhAT.projects.cms.pages.LoginPage;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import java.util.Hashtable;
 
 @Listeners(TestListener.class)         //Goi class Listener mới thiết lập
 public class LoginTest extends BaseTest {

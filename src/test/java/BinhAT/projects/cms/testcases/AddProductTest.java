@@ -1,14 +1,11 @@
-package BinhAT.testcases;
+package BinhAT.projects.cms.testcases;
 
 import BinhAT.common.BaseTest;
 import BinhAT.dataproviders.DataAddNewProduct;
 import BinhAT.helpers.ExcelHelper;
 import BinhAT.helpers.PropertiesHelper;
-import BinhAT.listeners.TestListener;
-import BinhAT.pages.admin.AddProductPage;
-import org.testng.annotations.DataProvider;
-import BinhAT.pages.LoginPage;
-import org.testng.annotations.Listeners;
+import BinhAT.projects.cms.pages.admin.AddProductPage;
+import BinhAT.projects.cms.pages.LoginPage;
 import org.testng.annotations.Test;
 
 import java.util.Hashtable;

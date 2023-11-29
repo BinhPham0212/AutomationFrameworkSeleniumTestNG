@@ -1,16 +1,11 @@
-package BinhAT.testcases;
+package BinhAT.projects.cms.testcases;
 
 import BinhAT.common.BaseTest;
-import BinhAT.drivers.DriverManager;
 import BinhAT.helpers.ExcelHelper;
 import BinhAT.helpers.PropertiesHelper;
-import BinhAT.pages.LoginPage;
-import BinhAT.pages.users.profilepage.ManageProfilePage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import BinhAT.projects.cms.pages.LoginPage;
+import BinhAT.projects.cms.pages.users.profilepage.ManageProfilePage;
 import org.testng.annotations.Test;
-
-import static BinhAT.keywords.WebUI.*;
 
 
 public class ProfileTest extends BaseTest {

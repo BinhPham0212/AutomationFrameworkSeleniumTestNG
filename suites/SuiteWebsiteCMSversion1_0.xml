@@ -4,25 +4,25 @@
     <test name="Parallel test Chrome" parallel="methods">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="BinhAT.testcases.OrderTest">
+            <class name="BinhAT.projects.cms.testcases.OrderTest">
                 <methods>
                     <include name="TC_AddToCart"/>
                 </methods>
             </class>
-            <class name="BinhAT.testcases.ProfileTest"/>
-            <class name="BinhAT.testcases.AddProductTest"/>
+            <class name="BinhAT.projects.cms.testcases.ProfileTest"/>
+            <class name="BinhAT.projects.cms.testcases.AddProductTest"/>
         </classes>
     </test>
     <test name="Parallel test Edge" parallel="methods">
         <parameter name="browser" value="edge"/>
         <classes>
-            <class name="BinhAT.testcases.OrderTest">
+            <class name="BinhAT.projects.cms.testcases.OrderTest">
                 <methods>
                     <include name="TC_AddToCart"/>
                 </methods>
             </class>
-            <class name="BinhAT.testcases.ProfileTest"/>
-            <class name="BinhAT.testcases.AddProductTest"/>
+            <class name="BinhAT.projects.cms.testcases.ProfileTest"/>
+            <class name="BinhAT.projects.cms.testcases.AddProductTest"/>
         </classes>
     </test>
 </suite>

@@ -1,4 +1,4 @@
-package BinhAT.pages.users;
+package BinhAT.projects.cms.pages.users;
 
 import org.openqa.selenium.By;
 

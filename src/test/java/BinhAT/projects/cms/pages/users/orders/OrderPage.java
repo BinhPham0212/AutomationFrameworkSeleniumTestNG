@@ -1,10 +1,9 @@
-package BinhAT.pages.users.orders;
+package BinhAT.projects.cms.pages.users.orders;
 
-import BinhAT.drivers.DriverManager;
 import BinhAT.helpers.PropertiesHelper;
-import BinhAT.pages.users.DashboardPage;
-import BinhAT.pages.users.products.ProductInfoPage;
-import BinhAT.pages.users.profilepage.ManageProfilePage;
+import BinhAT.projects.cms.pages.users.DashboardPage;
+import BinhAT.projects.cms.pages.users.products.ProductInfoPage;
+import BinhAT.projects.cms.pages.users.profilepage.ManageProfilePage;
 import BinhAT.utils.LogUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -123,7 +122,8 @@ public class OrderPage {
         waitForPageLoaded();
         clickElement(manageProfilePage.menuPurchaseHistory);
         waitForPageLoaded();
-        waitForElementPresent(lablelCodePurchase);
+        sleep(1);
+        waitForElementVisible(lablelCodePurchase);
         clickElement(lablelCodePurchase);
         waitForPageLoaded();
         verifyEquals(lablelOrderCodeID,OrderCodeSucess, "Code Purchase is NOT equal to Order Code ID in Purchase History page");
