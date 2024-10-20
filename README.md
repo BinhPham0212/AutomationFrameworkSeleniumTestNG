@@ -54,4 +54,4 @@
 
 - Log, Report + Screenshot case fail (Allure or Extent)
 
-- Parallel Execution 4 thread
+- Parallel Execution 4 thread  
